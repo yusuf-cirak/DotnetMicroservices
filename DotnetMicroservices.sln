@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformService", "Services\PlatformService\PlatformService.csproj", "{98B3D3D7-6FBA-4B54-B17E-B333239D9489}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandsService", "Services\CommandsService\CommandsService.csproj", "{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -11,11 +13,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{98B3D3D7-6FBA-4B54-B17E-B333239D9489} = {BA838791-80F4-40DF-90E7-7545E25648B1}
+		{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26} = {BA838791-80F4-40DF-90E7-7545E25648B1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{98B3D3D7-6FBA-4B54-B17E-B333239D9489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98B3D3D7-6FBA-4B54-B17E-B333239D9489}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B3D3D7-6FBA-4B54-B17E-B333239D9489}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B3D3D7-6FBA-4B54-B17E-B333239D9489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48FC94F-D5C3-49BB-9D08-DD2AB7601B26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
