@@ -1,0 +1,29 @@
+# @format
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: msintro.local
+      http:
+        paths:
+          - path: "/_api/platforms"
+            pathType: Prefix
+            backend:
+              service:
+                name: platformservice-cs-srv
+                port:
+                  number: 8080
+          - path: "/_api/commands"
+            pathType: Prefix
+            backend:
+              service:
+                name: commandservice-cs-srv
+                port:
+                  number: 8080
