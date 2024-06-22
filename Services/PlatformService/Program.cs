@@ -7,9 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddMappers();
+
+builder.Services.AddClientServices();
 builder.Services.AddDbContextServices();
 builder.Services.AddRepositoryServices();
+
 
 var app = builder.Build();
 
@@ -20,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.MapApiEndpoints();
 

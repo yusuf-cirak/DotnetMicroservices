@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data.Abstractions;
 using PlatformService.Dtos;
 using PlatformService.Models;
+using PlatformService.Services.Clients;
 
 namespace PlatformService.Endpoints;
 
@@ -39,16 +40,27 @@ public static class PlatformEndpoints
             .WithName("GetPlatformById");
 
         groupBuilder.MapPost("/",
-                (IPlatformRepository platformRepository, IMapper mapper,
+                async (IPlatformRepository platformRepository, ICommandDataClientService commandDataClientService,
+                    IMapper mapper,
                     [FromBody] CreatePlatformDto createPlatformDto) =>
                 {
                     var platform = mapper.Map<Platform>(createPlatformDto);
 
                     platformRepository.CreatePlatform(platform);
 
-                    platformRepository.SaveChanges();
+                    await platformRepository.SaveChangesAsync();
 
-                    return Results.Created(string.Empty, mapper.Map<GetPlatformDto>(platform));
+                    var platformDto = mapper.Map<GetPlatformDto>(platform);
+                    try
+                    {
+                        await commandDataClientService.SendPlatformToCommandAsync(platformDto);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"--> Couldn't send synchronously: {e.Message}");
+                    }
+
+                    return Results.Created(string.Empty, platformDto);
                 })
             .WithTags("Platforms");
     }
