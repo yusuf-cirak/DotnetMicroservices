@@ -7,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContextServices(builder.Configuration,builder.Environment);
+
+builder.Services.AddMapperServices();
+
+builder.Services.AddRepositoryServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,5 +25,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.MapApiEndpoints();
+
+app.PrepPopulation();
 
 app.Run();

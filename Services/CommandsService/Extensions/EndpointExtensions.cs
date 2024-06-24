@@ -6,6 +6,7 @@ public static class EndpointExtensions
 {
     public static void MapApiEndpoints(this WebApplication app)
     {
+        app.MapPlatformEndpoints();
         app.MapCommandEndpoints();
     }
 }
