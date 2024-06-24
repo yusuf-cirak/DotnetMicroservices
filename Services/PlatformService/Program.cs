@@ -12,7 +12,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddMappers();
 
 builder.Services.AddClientServices();
-builder.Services.AddDbContextServices();
+builder.Services.AddDbContextServices(builder.Configuration,builder.Environment);
 builder.Services.AddRepositoryServices();
 
 
@@ -31,4 +31,5 @@ app.MapApiEndpoints();
 
 app.PrepPopulation();
 
+System.Console.WriteLine("Starting the application...");
 app.Run();

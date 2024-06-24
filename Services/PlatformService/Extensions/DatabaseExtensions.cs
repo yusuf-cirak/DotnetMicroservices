@@ -5,17 +5,50 @@ namespace PlatformService.Extensions;
 
 public static class DatabaseExtensions
 {
-    public static void AddDbContextServices(this IServiceCollection services)
+    public static void AddDbContextServices(this IServiceCollection services,IConfiguration configuration,IWebHostEnvironment hostEnv)
     {
-        services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemory"));
+        services.AddDbContext<AppDbContext>(opt => {
+            if (hostEnv.IsDevelopment())
+            {
+                opt.UseInMemoryDatabase("InMem");
+                Console.WriteLine("--> Using InMemory Database");
+            }
+            else
+            {
+                opt.UseSqlServer(configuration.GetConnectionString("PlatformsConn"));
+                Console.WriteLine($"--> Using SQL Server Database");
+            }
+        
+        });
+        
     }
 
 
-    public static void PrepPopulation(this IApplicationBuilder app)
+    public static void PrepPopulation(this WebApplication app)
     {
-        using var services = app.ApplicationServices.CreateScope();
 
-        SeedData(services.ServiceProvider.GetService<AppDbContext>()!);
+        using var services = app.Services.CreateScope();
+
+        var dbContext = services.ServiceProvider.GetService<AppDbContext>()!;
+
+        if (app.Environment.IsProduction())
+        {
+            Console.WriteLine("--> Applying Migrations...");
+            try
+            {
+            dbContext.Database.Migrate();
+            }
+            catch (System.Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
+        else
+        {
+        SeedData(dbContext);
+
+        }
+
     }
 
     private static void SeedData(AppDbContext context)
