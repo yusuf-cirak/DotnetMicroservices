@@ -7,5 +7,7 @@ public static class ServiceExtensions
     public static void AddClientServices(this IServiceCollection services)
     {
         services.AddScoped<ICommandDataClientService, CommandDataClientService>();
+
+        services.AddSingleton<IMessageBusClient,MessageBusClient>();
     }
 }

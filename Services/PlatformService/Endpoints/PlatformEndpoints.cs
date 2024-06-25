@@ -41,7 +41,7 @@ public static class PlatformEndpoints
 
         groupBuilder.MapPost("/",
                 async (IPlatformRepository platformRepository, ICommandDataClientService commandDataClientService,
-                    IMapper mapper,
+                    IMapper mapper, IMessageBusClient messageBusClient,
                     [FromBody] CreatePlatformDto createPlatformDto) =>
                 {
                     var platform = mapper.Map<Platform>(createPlatformDto);
@@ -51,6 +51,8 @@ public static class PlatformEndpoints
                     await platformRepository.SaveChangesAsync();
 
                     var platformDto = mapper.Map<GetPlatformDto>(platform);
+
+                    // Send sync message
                     try
                     {
                         await commandDataClientService.SendPlatformToCommandAsync(platformDto);
@@ -58,6 +60,20 @@ public static class PlatformEndpoints
                     catch (Exception e)
                     {
                         Console.WriteLine($"--> Couldn't send synchronously: {e.Message}");
+                    }
+
+                    // Send async message
+
+                    try
+                    {
+                        var platformPublishedDto = mapper.Map<PlatformPublishedDto>(platformDto);
+                        platformPublishedDto.Event = "Platform_Published";
+
+                        messageBusClient.PublishNewPlatform(platformPublishedDto);
+                    }
+                    catch (System.Exception e)
+                    {
+                        System.Console.WriteLine($"--> Could not send asynchronously: {e.Message}");
                     }
 
                     return Results.Created(string.Empty, platformDto);

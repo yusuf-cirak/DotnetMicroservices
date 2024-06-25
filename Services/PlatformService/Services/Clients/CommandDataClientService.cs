@@ -23,7 +23,7 @@ public sealed class CommandDataClientService(IHttpClientFactory clientFactory, I
         using var client = clientFactory.CreateClient();
         var baseUrl = configuration["CommandService"];
 
-        var res = await client.PostAsync($"{baseUrl}/_api/commands/platform", httpContent);
+        var res = await client.PostAsync($"{baseUrl}/_api/c/platforms", httpContent);
 
         Console.WriteLine(res.IsSuccessStatusCode
             ? "--> Sync POST to CommandService was OK!"

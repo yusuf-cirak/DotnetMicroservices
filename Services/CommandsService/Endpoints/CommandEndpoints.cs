@@ -66,9 +66,5 @@ public static class CommandEndpoints
             return Results.Ok(mapper.Map<CommandReadDto>(newCommand));
         })
         .WithTags("Commands");
-        
-        groupBuilder.MapPost("/platform",
-                () => TypedResults.Ok())
-            .WithTags("Commands");
     }
 }
