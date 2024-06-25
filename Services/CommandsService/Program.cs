@@ -1,3 +1,4 @@
+using CommandsService.EventProcessing;
 using CommandsService.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextServices(builder.Configuration,builder.Environment);
 
 builder.Services.AddMapperServices();
+
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddBackgroundServices(builder.Configuration);
 
 builder.Services.AddRepositoryServices();
 
