@@ -30,6 +30,4 @@ if (app.Environment.IsDevelopment())
 
 app.MapApiEndpoints();
 
-app.PrepPopulation();
-
 app.Run();

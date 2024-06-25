@@ -20,7 +20,7 @@ spec:
                 name: platformservice-cs-srv
                 port:
                   number: 8080
-          - path: "/_api/commands"
+          - path: "/_api/c"
             pathType: Prefix
             backend:
               service:
