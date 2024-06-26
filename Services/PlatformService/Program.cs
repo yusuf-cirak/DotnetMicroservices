@@ -16,7 +16,7 @@ builder.Services.AddDbContextServices(builder.Configuration,builder.Environment)
 builder.Services.AddRepositoryServices();
 
 
-builder.Services.AddGrpcServices();
+builder.AddGrpcServerServices();
 
 var app = builder.Build();
 
@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.MapApiEndpoints();
-app.MapGrpcServices();
+app.MapGrpcServerServices();
 
 app.PrepPopulation();
 

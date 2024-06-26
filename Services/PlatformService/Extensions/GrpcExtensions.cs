@@ -5,15 +5,15 @@ namespace PlatformService.Extensions
     public static class GrpcExtensions
     {
 
-        public static void AddGrpcServices(this IServiceCollection services)
+        public static void AddGrpcServerServices(this WebApplicationBuilder builder)
         {
-            services.AddGrpc(options =>
+            builder.Services.AddGrpc(options =>
             {
                 options.EnableDetailedErrors = true;
             });
         }
 
-        public static void MapGrpcServices(this IEndpointRouteBuilder app)
+        public static void MapGrpcServerServices(this IEndpointRouteBuilder app)
         {
             app.MapGrpcService<GrpcPlatformService>();
 
