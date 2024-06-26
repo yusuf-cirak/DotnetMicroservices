@@ -16,6 +16,8 @@ builder.Services.AddDbContextServices(builder.Configuration,builder.Environment)
 builder.Services.AddRepositoryServices();
 
 
+builder.Services.AddGrpcServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +30,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.MapApiEndpoints();
+app.MapGrpcServices();
 
 app.PrepPopulation();
 
