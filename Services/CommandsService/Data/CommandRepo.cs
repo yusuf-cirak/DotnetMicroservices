@@ -1,5 +1,6 @@
 
 using CommandsService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommandsService.Data;
     public interface ICommandRepo
@@ -12,6 +13,7 @@ namespace CommandsService.Data;
         void CreatePlatform(Platform platform);
         bool PlatformExists(int platformId);
         bool ExternalPlatformExists(int externalPlatformId);
+        Task<bool> ExternalPlatformExistsAsync(int externalPlatformId);
 
         // Commands
         IEnumerable<Command> GetCommandsForPlatform(int platformId);
@@ -45,6 +47,11 @@ public sealed class CommandRepo : ICommandRepo
     public bool ExternalPlatformExists(int externalPlatformId)
     {
         return _context.Platforms.Any(p => p.ExternalID == externalPlatformId);
+    }
+
+    public Task<bool> ExternalPlatformExistsAsync(int externalPlatformId)
+    {
+        return _context.Platforms.AnyAsync(p => p.ExternalID == externalPlatformId);
     }
 
     public IEnumerable<Platform> GetAllPlatforms()

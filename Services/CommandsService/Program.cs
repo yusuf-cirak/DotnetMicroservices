@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 builder.Services.AddBackgroundServices(builder.Configuration);
 
 builder.Services.AddRepositoryServices();
+builder.Services.AddGrpcClientServices();
 
 var app = builder.Build();
 
@@ -29,5 +30,7 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.MapApiEndpoints();
+
+app.PrepPopulation();
 
 app.Run();
